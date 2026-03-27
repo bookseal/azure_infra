@@ -1,6 +1,24 @@
-# Workflow (Azure CLI + Terraform)
+# Terraform Workflow Guide
 
-## 1) Full Flow
+This guide provides a detailed walkthrough of using Terraform to deploy and manage Azure infrastructure. It's designed for readers new to Terraform.
+
+## Table of Contents
+
+1. [Understanding the Workflow](#1-understanding-the-workflow)
+2. [Infrastructure Architecture](#2-infrastructure-architecture)
+3. [Prerequisites Setup](#3-prerequisites-setup)
+4. [Terraform Basics](#4-terraform-basics)
+5. [Step-by-Step Deployment](#5-step-by-step-deployment)
+6. [Post-Deployment Verification](#6-post-deployment-verification)
+7. [Common Operations](#7-common-operations)
+8. [Troubleshooting](#8-troubleshooting)
+9. [Best Practices](#9-best-practices)
+
+---
+
+## 1) Understanding the Workflow
+
+This diagram shows the complete flow from setup to deployment:
 
 ```mermaid
 flowchart TD
@@ -15,6 +33,18 @@ flowchart TD
     I --> J[cloud-init runs<br/>install k3s + gradio + streamlit]
     J --> K[Deploy and run services]
 ```
+
+### Workflow Phases Explained
+
+| Phase | What Happens | Why It Matters |
+|-------|-------------|----------------|
+| **Setup** | Install Azure CLI & Terraform | One-time setup on your machine |
+| **Authenticate** | `az login` connects to Azure | Terraform needs permission to create resources |
+| **Configure** | Create `terraform.tfvars` | Define your specific settings (SSH key, IP ranges) |
+| **Initialize** | `terraform init` downloads providers | Prepares Terraform to talk to Azure |
+| **Plan** | `terraform plan` previews changes | See what will be created **before** it happens |
+| **Apply** | `terraform apply` creates resources | Actual infrastructure creation in Azure |
+| **Bootstrap** | cloud-init installs k3s | Automated VM configuration on first boot |
 
 ## 2) Infrastructure
 
@@ -36,8 +66,8 @@ graph LR
 - [x] Write Terraform code (Azure VM + network + NSG)
 - [x] Add cloud-init for k3s bootstrap
 - [x] Add docs + Mermaid diagrams
-- [ ] Run `az login` (user step)
-- [ ] Run real `terraform apply`
+- [x] Run `az login`
+- [x] Run real `terraform apply`
 
 ## 4) Directory Structure
 
