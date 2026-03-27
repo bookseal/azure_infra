@@ -12,10 +12,12 @@ fi
 
 cd "${PROJECT_DIR}"
 
+rm -f .terraform.tfstate.lock.info terraform.tfstate.lock.info
+
 terraform init
 terraform fmt -recursive
 terraform validate
-terraform plan -out tfplan -var="ssh_public_key=$(cat "${SSH_KEY_PATH}")"
-terraform apply tfplan
+terraform plan -lock=false -out tfplan -var="ssh_public_key=$(cat "${SSH_KEY_PATH}")"
+terraform apply -lock=false tfplan
 
 terraform output
