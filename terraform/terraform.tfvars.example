@@ -1,0 +1,15 @@
+location             = "koreacentral"
+name_prefix          = "k3s-lab"
+admin_username       = "azureuser"
+ssh_public_key       = "ssh-ed25519 AAAA... your-key"
+vm_size              = "Standard_D4s_v5"
+os_disk_size_gb      = 128
+k3s_api_allowed_cidr = "YOUR_PUBLIC_IP/32"
+timezone             = "Asia/Seoul"
+
+tags = {
+  project     = "k3s-web-lab"
+  managed_by  = "terraform"
+  environment = "dev"
+  owner       = "gichanlee"
+}

@@ -1,0 +1,23 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+timezone: ${timezone}
+
+packages:
+  - curl
+  - git
+  - jq
+  - htop
+  - ca-certificates
+  - apt-transport-https
+  - gnupg
+  - python3-pip
+
+runcmd:
+  - [ sh, -c, "curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC=\"--write-kubeconfig-mode 644\" sh -" ]
+  - [ sh, -c, "mkdir -p /home/azureuser/.kube && cp /etc/rancher/k3s/k3s.yaml /home/azureuser/.kube/config && chown -R azureuser:azureuser /home/azureuser/.kube" ]
+  - [ sh, -c, "python3 -m pip install --upgrade pip" ]
+  - [ sh, -c, "python3 -m pip install gradio streamlit" ]
+  - [ sh, -c, "echo 'k3s bootstrap done' > /var/log/k3s-bootstrap.log" ]
+
+final_message: "Cloud-init finished. k3s and Python web tooling are installed."
